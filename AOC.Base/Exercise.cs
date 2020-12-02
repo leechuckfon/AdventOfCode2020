@@ -6,8 +6,8 @@ namespace AOC.Base {
     public abstract class Excercise<T>: object {
 
         public void Solve() {
-            Console.WriteLine("Answer: " + Grey());
-            Console.WriteLine("Answer: " + Gold());
+            Console.WriteLine("Silver Answer: " + Silver());
+            Console.WriteLine("Gold Answer: " + Gold());
         }
 
         public string[] ReadExample() {
@@ -17,21 +17,21 @@ namespace AOC.Base {
             return File.ReadAllLines("./Inputs/RI.txt");
         }
 
-        private T Grey() {
+        private T Silver() {
             var stopwatch = Stopwatch.StartNew();
-            var result = DoGrey();
+            var result = DoSilver();
             stopwatch.Stop();
-            Console.WriteLine("T (tick): " + stopwatch.ElapsedTicks);
+            Console.WriteLine("T-total (millis): " + stopwatch.Elapsed.TotalMilliseconds);
             return result;
         }
 
-        protected abstract T DoGrey();
+        protected abstract T DoSilver();
 
         private T Gold() {
             var stopwatch = Stopwatch.StartNew();
             var result = DoGold();
             stopwatch.Stop();
-            Console.WriteLine("T (tick): " + stopwatch.ElapsedTicks);
+            Console.WriteLine("T-total (millis): " + stopwatch.Elapsed.TotalMilliseconds);
             return result;
         }
 

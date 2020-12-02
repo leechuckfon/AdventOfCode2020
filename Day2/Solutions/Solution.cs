@@ -1,5 +1,8 @@
 ﻿using AOC.Base;
+using AOC.Base.Models;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -9,6 +12,7 @@ namespace Day2.Solutions
     {
         protected override long DoGold()
         {
+            Stopwatch s = Stopwatch.StartNew();
             var lines = ReadInput();
             var policies = new List<Policy>();
             foreach (var line in lines)
@@ -23,12 +27,19 @@ namespace Day2.Solutions
                 });
 
             }
-            return policies.Select(x => CheckOccurPolicy(x)).Count(x => x == true);
+            s.Stop();
+            Console.WriteLine("T-Read: " + s.Elapsed.TotalMilliseconds);
+            s = Stopwatch.StartNew();
+            var result = policies.Select(x => x.CheckOccurPolicy()).Count(x => x == true);
+            s.Stop();
+            Console.WriteLine("T-Result: " + s.Elapsed.TotalMilliseconds);
+            return result;
 
         }
 
-        protected override long DoGrey()
+        protected override long DoSilver()
         {
+            Stopwatch s = Stopwatch.StartNew();
             var lines = ReadInput();
             var policies = new List<Policy>();
             foreach (var line in lines)
@@ -43,42 +54,13 @@ namespace Day2.Solutions
                 });
 
             }
-
-            return policies.Select(x => CheckPolicy(x)).Count(x => x == true);
+            s.Stop();
+            Console.WriteLine("T-Read: " + s.Elapsed.TotalMilliseconds);
+            s = Stopwatch.StartNew();
+            var result = policies.Select(x => x.CheckPolicy()).Count(x => x == true);
+            s.Stop();
+            Console.WriteLine("T-Result: " + s.Elapsed.TotalMilliseconds);
+            return result;
         }
-
-        public bool CheckPolicy(Policy p)
-        {
-            var occur = p.Password.Where(x => x == p.Sequence).Count();
-            if (p.MinOccur > occur || p.MaxOccur < occur)
-            {
-                return false;
-            }
-            return true;
-        }
-
-        public bool CheckOccurPolicy(Policy p)
-        {
-            var check1 = p.Password[p.MinOccur - 1];
-            var check2 = p.Password[p.MaxOccur - 1];
-
-            var onlya = check1 != p.Sequence && check2 == p.Sequence;
-            var onlyb = check1 == p.Sequence && check2 != p.Sequence;
-
-            if (onlya || onlyb)
-            {
-                return true;
-            }
-
-            return false;
-        }
-    }
-
-    class Policy
-    {
-        public string Password { get; set; }
-        public int MinOccur { get; set; }
-        public int MaxOccur { get; set; }
-        public char Sequence { get; set; }
     }
 }

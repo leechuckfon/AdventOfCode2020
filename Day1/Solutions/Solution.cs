@@ -23,7 +23,7 @@ namespace Day1.Solutions
             return 0;
         }
 
-        protected override long DoGrey()
+        protected override long DoSilver()
         {
             var lines = ReadInput();
             var allNumbers = lines.Select(x => int.Parse(x));
