@@ -11,13 +11,12 @@ namespace Day3.Solutions
     {
         protected override long DoGold()
         {
-            
-
+            return 0;
         }
 
         protected override long DoSilver()
         {
-            
+            return 0;
         }
     }    
 }

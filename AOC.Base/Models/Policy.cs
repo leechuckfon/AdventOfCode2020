@@ -1,4 +1,6 @@
-﻿namespace AOC.Base.Models
+﻿using System.Linq;
+
+namespace AOC.Base.Models
 {
     public class Policy
     {

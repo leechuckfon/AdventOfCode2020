@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AOC.Template.Solutions;
+using System;
 using System.Diagnostics;
 
 namespace AOC.Template
