@@ -16,7 +16,7 @@ namespace Day3.Solutions
          * Area will have a 2D char array
          * Area will be able to use the array and MoveSettings to traverse the map using Traverse()
          * **/
-        protected override long DoGold()
+        protected override void DoGold()
         {
             List<Area> positions = new List<Area>();
 
@@ -66,11 +66,9 @@ namespace Day3.Solutions
             {
                 Result = positions.Select(x => x.CalculateTrees()).Aggregate((x, y) => x * y);
             });
-            
-            return Result;
         }
 
-        protected override long DoSilver()
+        protected override void DoSilver()
         {
             var area = new Area();
             PerfMon.Monitor("Parse", () =>
@@ -93,8 +91,6 @@ namespace Day3.Solutions
             {
                 Result = area.CalculateTrees();
             });
-
-            return Result;
         }
     }
 

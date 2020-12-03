@@ -4,14 +4,12 @@ namespace AOC.Template.Solutions
 {
     class Solution : Excercise<long>
     {
-        protected override long DoGold()
+        protected override void DoGold()
         {
-            return 0;
         }
 
-        protected override long DoSilver()
+        protected override void DoSilver()
         {
-            return 0;
         }
     }
 }

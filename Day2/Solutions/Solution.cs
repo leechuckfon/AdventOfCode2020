@@ -10,7 +10,7 @@ namespace Day2.Solutions
 {
     class Solution : Excercise<long>
     {
-        protected override long DoGold()
+        protected override void DoGold()
         {
             Stopwatch s = Stopwatch.StartNew();
             var lines = ReadInput();
@@ -30,14 +30,13 @@ namespace Day2.Solutions
             s.Stop();
             Console.WriteLine("T-Read: " + s.Elapsed.TotalMilliseconds);
             s = Stopwatch.StartNew();
-            var result = policies.Select(x => x.CheckOccurPolicy()).Count(x => x == true);
+            Result = policies.Select(x => x.CheckOccurPolicy()).Count(x => x == true);
             s.Stop();
             Console.WriteLine("T-Result: " + s.Elapsed.TotalMilliseconds);
-            return result;
 
         }
 
-        protected override long DoSilver()
+        protected override void DoSilver()
         {
             Stopwatch s = Stopwatch.StartNew();
             var lines = ReadInput();
@@ -57,10 +56,9 @@ namespace Day2.Solutions
             s.Stop();
             Console.WriteLine("T-Read: " + s.Elapsed.TotalMilliseconds);
             s = Stopwatch.StartNew();
-            var result = policies.Select(x => x.CheckPolicy()).Count(x => x == true);
+            Result = policies.Select(x => x.CheckPolicy()).Count(x => x == true);
             s.Stop();
             Console.WriteLine("T-Result: " + s.Elapsed.TotalMilliseconds);
-            return result;
         }
     }
 }

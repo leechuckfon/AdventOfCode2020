@@ -5,7 +5,7 @@ namespace Day1.Solutions
 {
     class Solution : Excercise<long>
     {
-        protected override long DoGold()
+        protected override void DoGold()
         {
             var lines = ReadInput();
             var allNumbers = lines.Select(x => int.Parse(x));
@@ -16,14 +16,14 @@ namespace Day1.Solutions
                     var result = allNumbers.Except(new int[] { number, nu }).Where(y => y + number + nu == 2020).FirstOrDefault();
                     if (result != default(int))
                     {
-                        return result * number * nu;
+                        Result = result * number * nu;
+                        return;
                     }
                 }
             }
-            return 0;
         }
 
-        protected override long DoSilver()
+        protected override void DoSilver()
         {
             var lines = ReadInput();
             var allNumbers = lines.Select(x => int.Parse(x));
@@ -33,10 +33,10 @@ namespace Day1.Solutions
                 var result = allNumbers.Except(new int[] { number }).Where(y => y + number == 2020).FirstOrDefault();
                 if (result != default(int))
                 {
-                    return result * number;
+                    Result = result * number;
+                    return;
                 }
             }
-            return 0;
         }
     }
 }

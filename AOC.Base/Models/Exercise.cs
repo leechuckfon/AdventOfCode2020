@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AOC.Base.Helpers;
+using System;
 using System.Diagnostics;
 using System.IO;
 
@@ -20,24 +21,18 @@ namespace AOC.Base {
         }
 
         private T Silver() {
-            var stopwatch = Stopwatch.StartNew();
-            var result = DoSilver();
-            stopwatch.Stop();
-            Console.WriteLine("T-total (millis): " + stopwatch.Elapsed.TotalMilliseconds);
-            return result;
+            PerfMon.Monitor("SilverTotal", () => DoSilver());
+            return Result;
         }
 
-        protected abstract T DoSilver();
+        protected abstract void DoSilver();
 
         private T Gold() {
-            var stopwatch = Stopwatch.StartNew();
-            var result = DoGold();
-            stopwatch.Stop();
-            Console.WriteLine("T-total (millis): " + stopwatch.Elapsed.TotalMilliseconds);
-            return result;
+            PerfMon.Monitor("GoldTotal", () => DoGold());
+            return Result;
         }
 
-        protected abstract T DoGold();
+        protected abstract void DoGold();
 
     }
 }
