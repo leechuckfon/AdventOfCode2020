@@ -1,4 +1,5 @@
-﻿using Day2.Solutions;
+﻿using AOC.Base.Helpers;
+using Day2.Solutions;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -10,11 +11,11 @@ namespace Day2
     {
         static void Main(string[] args)
         {
-            var solution = new Solution();
-            Stopwatch s = Stopwatch.StartNew();
-            solution.Solve();
-            s.Stop();
-            Console.WriteLine("T-DayTotal: " + s.Elapsed.TotalMilliseconds);
+            PerfMon.Monitor("DayTotal", () =>
+            {
+                var solution = new Solution();
+                solution.Solve();
+            });
         }
     }
 }
