@@ -9,16 +9,24 @@ namespace Day3.Solutions
 {
     class Solution : Excercise<long>
     {
+
+        /**
+         * Make Area object with internal MoveSettings
+         * Area will have a 2D char array
+         * Area will be able to use the array and MoveSettings to traverse the map using Traverse()
+         * **/
         protected override long DoGold()
         {
             var trees = new List<int>();
             var lines = ReadInput();
             var area = new List<char[]>();
+            // Create Area
             for (int i = 0; i < lines.Count(); i++)
             {
                 area.Add(lines[i].ToCharArray());
             }
 
+            // Create MoveSettings
             var positions = new List<Pos>()
             {
                 new Pos
@@ -48,7 +56,7 @@ namespace Day3.Solutions
                 }
             };
             Stopwatch s = Stopwatch.StartNew();
-
+            // Traverse
             foreach (var position in positions)
             {
                 var t = 0;
@@ -83,14 +91,17 @@ namespace Day3.Solutions
             var trees = 0;
             var lines = ReadInput();
             var area = new List<char[]>();
+            // Create Area
             for (int i = 0; i < lines.Count(); i++)
             {
                 area.Add(lines[i].ToCharArray());
             }
-
+            // Create MoveSettings
             var rightPos = 3;
             var downPos = 1;
             Stopwatch s = Stopwatch.StartNew();
+
+            // Traverse
             for (var i = 0; i < area.Count; i++)
             {
                 var XCo = area[i * downPos];
