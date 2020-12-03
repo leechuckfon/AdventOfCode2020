@@ -20,7 +20,7 @@ namespace Day3.Solutions
         {
             List<Area> positions = new List<Area>();
 
-            PerfMon.Monitor("Read", () =>
+            PerfMon.Monitor("Parse", () =>
             {
                 var lines = ReadInput();
                 var area = new List<char[]>();
@@ -73,7 +73,7 @@ namespace Day3.Solutions
         protected override long DoSilver()
         {
             var area = new Area();
-            PerfMon.Monitor("Read",() =>
+            PerfMon.Monitor("Parse", () =>
             {
                 var lines = ReadInput();
                 for (int i = 0; i < lines.Count(); i++)

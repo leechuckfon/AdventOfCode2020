@@ -2,37 +2,34 @@
 
 namespace Day3.Solutions
 {
-    partial class Solution
+    public class Area
     {
-        public class Area
+        public List<char[]> Map { get; set; } = new List<char[]>();
+        public MoveSettings Settings { get; set; }
+
+        public int CalculateTrees()
         {
-            public List<char[]> Map { get; set; } = new List<char[]>();
-            public MoveSettings Settings { get; set; }
+            var trees = 0;
 
-            public int CalculateTrees()
+            for (var i = 0; i * Settings.Down < Map.Count; i++)
             {
-                var trees = 0;
-
-                for (var i = 0; i * Settings.Down < Map.Count; i++)
+                var yCoordinate = Map[i * Settings.Down];
+                var lengthOfLineFromInput = yCoordinate.Length;
+                var xCoordinate = i * Settings.Right;
+                while (xCoordinate >= lengthOfLineFromInput)
                 {
-                    var yCoordinate = Map[i * Settings.Down];
-                    var lengthOfLineFromInput = yCoordinate.Length;
-                    var xCoordinate = i * Settings.Right;
-                    while (xCoordinate >= lengthOfLineFromInput)
-                    {
-                        xCoordinate -= lengthOfLineFromInput;
-                    }
-
-                    var occupant = yCoordinate[xCoordinate];
-
-                    if (occupant == '#')
-                    {
-                        trees++;
-                    }
+                    xCoordinate -= lengthOfLineFromInput;
                 }
 
-                return trees;
+                var occupant = yCoordinate[xCoordinate];
+
+                if (occupant == '#')
+                {
+                    trees++;
+                }
             }
+
+            return trees;
         }
     }
 
