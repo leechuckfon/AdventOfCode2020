@@ -1,4 +1,6 @@
 ﻿using AOC.Base;
+using AOC.Base.Helpers;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Day1.Solutions
@@ -8,35 +10,48 @@ namespace Day1.Solutions
         protected override void DoGold()
         {
             var lines = ReadInput();
-            var allNumbers = lines.Select(x => int.Parse(x));
-            foreach (var number in allNumbers)
+            IEnumerable<int> allNumbers = Enumerable.Empty<int>();
+            
+            PerfMon.Monitor("Read", () => allNumbers = lines.Select(x => int.Parse(x)));
+
+
+            PerfMon.Monitor("Calculate", () =>
             {
-                foreach (var nu in allNumbers.Except(new int[] { number }))
+                foreach (var number in allNumbers)
                 {
-                    var result = allNumbers.Except(new int[] { number, nu }).Where(y => y + number + nu == 2020).FirstOrDefault();
-                    if (result != default(int))
+                    foreach (var nu in allNumbers.Except(new int[] { number }))
                     {
-                        Result = result * number * nu;
-                        return;
+                        var result = allNumbers.Except(new int[] { number, nu }).Where(y => y + number + nu == 2020).FirstOrDefault();
+                        if (result != default(int))
+                        {
+                            Result = result * number * nu;
+                            return;
+                        }
                     }
                 }
-            }
+            });
+            
         }
 
         protected override void DoSilver()
         {
             var lines = ReadInput();
-            var allNumbers = lines.Select(x => int.Parse(x));
+            IEnumerable<int> allNumbers = Enumerable.Empty<int>();
 
-            foreach (var number in allNumbers)
+            PerfMon.Monitor("Read", () => allNumbers = lines.Select(x => int.Parse(x)));
+
+            PerfMon.Monitor("Calculate", () =>
             {
-                var result = allNumbers.Except(new int[] { number }).Where(y => y + number == 2020).FirstOrDefault();
-                if (result != default(int))
+                foreach (var number in allNumbers)
                 {
-                    Result = result * number;
-                    return;
+                    var result = allNumbers.Except(new int[] { number }).Where(y => y + number == 2020).FirstOrDefault();
+                    if (result != default(int))
+                    {
+                        Result = result * number;
+                        return;
+                    }
                 }
-            }
+            });
         }
     }
 }

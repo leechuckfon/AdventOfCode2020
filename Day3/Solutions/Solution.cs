@@ -71,6 +71,7 @@ namespace Day3.Solutions
         protected override void DoSilver()
         {
             var area = new Area();
+            
             PerfMon.Monitor("Parse", () =>
             {
                 var lines = ReadInput();
