@@ -1,4 +1,5 @@
 ﻿using AOC.Base;
+using AOC.Base.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -7,7 +8,7 @@ using System.Text.RegularExpressions;
 
 namespace Day3.Solutions
 {
-    class Solution : Excercise<long>
+    partial class Solution : Excercise<long>
     {
 
         /**
@@ -17,127 +18,84 @@ namespace Day3.Solutions
          * **/
         protected override long DoGold()
         {
-            Stopwatch s = Stopwatch.StartNew();
-            var trees = new List<int>();
-            var lines = ReadInput();
-            var area = new List<char[]>();
-            // Create Area
-            for (int i = 0; i < lines.Count(); i++)
-            {
-                area.Add(lines[i].ToCharArray());
-            }
+            List<Area> positions = new List<Area>();
 
-            // Create MoveSettings
-            var positions = new List<Pos>()
+            PerfMon.Monitor("Read", () =>
             {
-                new Pos
+                var lines = ReadInput();
+                var area = new List<char[]>();
+                // Create Area
+                for (int i = 0; i < lines.Count(); i++)
                 {
-                    Right = 1,
-                    Down = 1
-                },
-                new Pos
-                {
-                    Right = 3,
-                    Down = 1
-                },
-                new Pos
-                {
-                    Right = 5,
-                    Down = 1
-                },
-                new Pos
-                {
-                    Right = 7,
-                    Down = 1
-                },
-                new Pos
-                {
-                    Right = 1,
-                    Down = 2
+                    area.Add(lines[i].ToCharArray());
                 }
-            };
 
-            s.Stop();
-            Console.WriteLine("T-Read: " + s.Elapsed.TotalMilliseconds);
-            s = Stopwatch.StartNew();
-            // Traverse
-            foreach (var position in positions)
-            {
-                var t = 0;
-                for (var i = 0; i * position.Down < area.Count; i++)
+                // Create MoveSettings
+                positions = new List<Area>()
                 {
-                    var XCo = area[i * position.Down];
-                    var lineLength = XCo.Length;
-                    var skip = i * position.Right;
-                    while (skip >= lineLength)
+                    new Area
                     {
-                        skip -= lineLength;
-                    }
-
-                    var thing = XCo[skip];
-
-                    if (thing == '#')
+                        Map = area,
+                        Settings = new MoveSettings { Right = 1, Down = 1 }
+                    },
+                    new Area
                     {
-                        t++;
+                        Map = area,
+                        Settings = new MoveSettings { Right = 3, Down = 1 }
+                    },
+                    new Area
+                    {
+                        Map = area,
+                        Settings = new MoveSettings { Right = 5, Down = 1 }
+                    },
+                    new Area
+                    {
+                        Map = area,
+                        Settings = new MoveSettings { Right = 7, Down = 1 }
+                    },
+                    new Area
+                    {
+                        Map = area,
+                        Settings = new MoveSettings { Right = 1, Down = 2 }
                     }
-                }
-                trees.Add(t);
+                };
 
-            }
-            var result = trees.Aggregate((x, y) => x * y);
-            s.Stop();
-            Console.WriteLine("T-CalculateTrees: " + s.Elapsed.TotalMilliseconds);
-            return result;
+            });
+
+            PerfMon.Monitor("Calculate", () =>
+            {
+                Result = positions.Select(x => x.CalculateTrees()).Aggregate((x, y) => x * y);
+            });
+            
+            return Result;
         }
 
         protected override long DoSilver()
         {
-            Stopwatch s = Stopwatch.StartNew();
-
-            var trees = 0;
-            var lines = ReadInput();
-            var area = new List<char[]>();
-            // Create Area
-            for (int i = 0; i < lines.Count(); i++)
+            var area = new Area();
+            PerfMon.Monitor("Read",() =>
             {
-                area.Add(lines[i].ToCharArray());
-            }
-            // Create MoveSettings
-            var rightPos = 3;
-            var downPos = 1;
-
-            s.Stop();
-            Console.WriteLine("T-Read: " + s.Elapsed.TotalMilliseconds);
-            s = Stopwatch.StartNew();
-
-            // Traverse
-            for (var i = 0; i < area.Count; i++)
-            {
-                var XCo = area[i * downPos];
-                var lineLength = XCo.Length;
-                var skip = i * rightPos;
-                while (skip >= lineLength)
+                var lines = ReadInput();
+                for (int i = 0; i < lines.Count(); i++)
                 {
-                    skip -= lineLength;
+                    area.Map.Add(lines[i].ToCharArray());
                 }
 
-                var thing = XCo[skip];
-
-                if (thing == '#')
+                area.Settings = new MoveSettings()
                 {
-                    trees++;
-                }
-            }
+                    Down = 1,
+                    Right = 3
+                };
 
-            s.Stop();
-            Console.WriteLine("T-CalculateTrees: " + s.Elapsed.TotalMilliseconds);
-            return trees;
-        }
+            });
+           
+            PerfMon.Monitor("Calculate", () =>
+            {
+                Result = area.CalculateTrees();
+            });
 
-        class Pos
-        {
-            public int Right { get; set; }
-            public int Down { get; set; }
+            return Result;
         }
     }
+
 }

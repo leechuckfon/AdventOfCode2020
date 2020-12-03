@@ -5,6 +5,8 @@ using System.IO;
 namespace AOC.Base {
     public abstract class Excercise<T>: object {
 
+        public T Result { get; set; } = default(T);
+
         public void Solve() {
             Console.WriteLine("Silver Answer: " + Silver());
             Console.WriteLine("Gold Answer: " + Gold());
