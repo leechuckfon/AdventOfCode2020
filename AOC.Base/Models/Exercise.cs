@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.IO;
 
 namespace AOC.Base {
-    public abstract class Excercise<T>: object {
+    public abstract class Excercise<T> {
 
         public T Result { get; set; } = default(T);
 
