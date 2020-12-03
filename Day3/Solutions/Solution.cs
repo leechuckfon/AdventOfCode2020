@@ -17,6 +17,7 @@ namespace Day3.Solutions
          * **/
         protected override long DoGold()
         {
+            Stopwatch s = Stopwatch.StartNew();
             var trees = new List<int>();
             var lines = ReadInput();
             var area = new List<char[]>();
@@ -55,7 +56,10 @@ namespace Day3.Solutions
                     Down = 2
                 }
             };
-            Stopwatch s = Stopwatch.StartNew();
+
+            s.Stop();
+            Console.WriteLine("T-Read: " + s.Elapsed.TotalMilliseconds);
+            s = Stopwatch.StartNew();
             // Traverse
             foreach (var position in positions)
             {
@@ -80,14 +84,16 @@ namespace Day3.Solutions
                 trees.Add(t);
 
             }
-
+            var result = trees.Aggregate((x, y) => x * y);
             s.Stop();
             Console.WriteLine("T-CalculateTrees: " + s.Elapsed.TotalMilliseconds);
-            return trees.Aggregate((x,y) => x*y);
+            return result;
         }
 
         protected override long DoSilver()
         {
+            Stopwatch s = Stopwatch.StartNew();
+
             var trees = 0;
             var lines = ReadInput();
             var area = new List<char[]>();
@@ -99,7 +105,10 @@ namespace Day3.Solutions
             // Create MoveSettings
             var rightPos = 3;
             var downPos = 1;
-            Stopwatch s = Stopwatch.StartNew();
+
+            s.Stop();
+            Console.WriteLine("T-Read: " + s.Elapsed.TotalMilliseconds);
+            s = Stopwatch.StartNew();
 
             // Traverse
             for (var i = 0; i < area.Count; i++)
