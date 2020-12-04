@@ -119,51 +119,71 @@ namespace Day4.Solutions
         // change all to regex
         private bool CheckByr(string v)
         {
-            return v.Length == 4 && int.Parse(v) >= 1920 && int.Parse(v) <= 2002;
+            var year = Regex.Match(v, "^([0-9]{4})$");
+            if (year.Success)
+            {
+                var actualYear = year.Groups[0].Value;
+                return int.Parse(actualYear) >= 1920 && int.Parse(actualYear) <= 2002;
+            }
+
+            return false;
         }
 
         private bool CheckIyr(string v)
         {
-            return v.Length == 4 && int.Parse(v) >= 2010 && int.Parse(v) <= 2020;
+            var year = Regex.Match(v, "^([0-9]{4})$");
+            if (year.Success)
+            {
+                var actualYear = year.Groups[0].Value;
+                return int.Parse(actualYear) >= 2010 && int.Parse(actualYear) <= 2020;
+            }
+
+            return false;
         }
 
         private bool CheckEyr(string v)
         {
-            return v.Length == 4 && int.Parse(v) >= 2020 && int.Parse(v) <= 2030;
+            var year = Regex.Match(v, "^([0-9]{4})$");
+            if (year.Success)
+            {
+                var actualYear = year.Groups[0].Value;
+                return int.Parse(actualYear) >= 2020 && int.Parse(actualYear) <= 2030;
+            }
+
+            return false;
         }
 
         private bool CheckHgt(string v)
         {
-            if (v.IndexOf("cm") > 0)
+            var height = Regex.Match(v, "^([0-9]*)(cm|in)$");
+            if (height.Success)
             {
-                var n = int.Parse(v.Substring(0, v.Length - 2));
-                return n >= 150 && n <= 193;
-
-            } else if (v.IndexOf("in") > 0)
-            {
-                var n = int.Parse(v.Substring(0, v.Length - 2));
-                return n >= 59 && n <= 76;
-
+                if (height.Groups[2].Value == "cm")
+                {
+                    var n = int.Parse(height.Groups[1].Value);
+                    return n >= 150 && n <= 193;
+                } else
+                {
+                    var n = int.Parse(height.Groups[1].Value);
+                    return n >= 59 && n <= 76;
+                }
             }
             return false;
         }
 
         private bool CheckHcl(string v)
         {
-            var yes = Regex.Match(v, "^#([a-f]|[0-9]){6}$").Success;
-            return yes;
+            return Regex.Match(v, "^#([a-f]|[0-9]){6}$").Success;
         }
 
         private bool CheckEcl(string v)
         {
-            var m = new List<string>() { "amb", "blu", "brn", "gry", "grn", "hzl", "oth" };
-            return m.Contains(v.ToLower());
+            return Regex.Match(v, "^amb|blu|brn|gry|grn|hzl|oth$").Success;
         }
 
         private bool CheckPid(string v)
         {
-            var yes = Regex.Match(v, "^[0-9]{9}$").Success;
-            return yes;
+            return Regex.Match(v, "^[0-9]{9}$").Success;
         }
     }
 }
