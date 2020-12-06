@@ -34,5 +34,7 @@ namespace AOC.Base {
 
         protected abstract void DoGold();
 
+        protected abstract void ParseInput();
+
     }
 }

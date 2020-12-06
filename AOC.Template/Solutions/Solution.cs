@@ -11,5 +11,9 @@ namespace AOC.Template.Solutions
         protected override void DoSilver()
         {
         }
+
+        protected override void ParseInput()
+        {
+        }
     }
 }

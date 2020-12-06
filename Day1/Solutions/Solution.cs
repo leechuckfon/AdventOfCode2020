@@ -7,14 +7,10 @@ namespace Day1.Solutions
 {
     class Solution : Excercise<long>
     {
+        IEnumerable<int> allNumbers = Enumerable.Empty<int>();
+
         protected override void DoGold()
         {
-            var lines = ReadInput();
-            IEnumerable<int> allNumbers = Enumerable.Empty<int>();
-            
-            PerfMon.Monitor("Read", () => allNumbers = lines.Select(x => int.Parse(x)));
-
-
             PerfMon.Monitor("Calculate", () =>
             {
                 foreach (var number in allNumbers)
@@ -30,15 +26,12 @@ namespace Day1.Solutions
                     }
                 }
             });
-            
+
         }
 
         protected override void DoSilver()
         {
-            var lines = ReadInput();
-            IEnumerable<int> allNumbers = Enumerable.Empty<int>();
-
-            PerfMon.Monitor("Read", () => allNumbers = lines.Select(x => int.Parse(x)));
+            ParseInput();
 
             PerfMon.Monitor("Calculate", () =>
             {
@@ -52,6 +45,11 @@ namespace Day1.Solutions
                     }
                 }
             });
+        }
+
+        protected override void ParseInput()
+        {
+            PerfMon.Monitor("Read", () => { var lines = ReadInput(); allNumbers = lines.Select(x => int.Parse(x)); });
         }
     }
 }

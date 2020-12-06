@@ -16,10 +16,45 @@ namespace Day3.Solutions
          * Area will have a 2D char array
          * Area will be able to use the array and MoveSettings to traverse the map using Traverse()
          * **/
+        List<Area> positions = new List<Area>();
+        
         protected override void DoGold()
         {
-            List<Area> positions = new List<Area>();
+            ParseInput();
+            PerfMon.Monitor("Calculate", () =>
+            {
+                Result = positions.Select(x => x.CalculateTrees()).Aggregate((x, y) => x * y);
+            });
+        }
 
+        protected override void DoSilver()
+        {
+            var area = new Area();
+            
+            PerfMon.Monitor("Parse", () =>
+            {
+                var lines = ReadInput();
+                for (int i = 0; i < lines.Count(); i++)
+                {
+                    area.Map.Add(lines[i].ToCharArray());
+                }
+
+                area.Settings = new MoveSettings()
+                {
+                    Down = 1,
+                    Right = 3
+                };
+
+            });
+           
+            PerfMon.Monitor("Calculate", () =>
+            {
+                Result = area.CalculateTrees();
+            });
+        }
+
+        protected override void ParseInput()
+        {
             PerfMon.Monitor("Parse", () =>
             {
                 var lines = ReadInput();
@@ -60,37 +95,6 @@ namespace Day3.Solutions
                     }
                 };
 
-            });
-
-            PerfMon.Monitor("Calculate", () =>
-            {
-                Result = positions.Select(x => x.CalculateTrees()).Aggregate((x, y) => x * y);
-            });
-        }
-
-        protected override void DoSilver()
-        {
-            var area = new Area();
-            
-            PerfMon.Monitor("Parse", () =>
-            {
-                var lines = ReadInput();
-                for (int i = 0; i < lines.Count(); i++)
-                {
-                    area.Map.Add(lines[i].ToCharArray());
-                }
-
-                area.Settings = new MoveSettings()
-                {
-                    Down = 1,
-                    Right = 3
-                };
-
-            });
-           
-            PerfMon.Monitor("Calculate", () =>
-            {
-                Result = area.CalculateTrees();
             });
         }
     }
