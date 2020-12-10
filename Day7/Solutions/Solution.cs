@@ -35,7 +35,8 @@ namespace AOC.Template.Solutions
                 ParseInput();
             });
 
-            PerfMon.Monitor("Calculate", () => {
+            PerfMon.Monitor("Calculate", () =>
+            {
                 Result = bags.Select(x => FindGold(x)).Count(x => x == true);
             });
         }
@@ -45,16 +46,16 @@ namespace AOC.Template.Solutions
             if (x.ContainsKind.ContainsKey("shiny gold"))
             {
                 return true;
-            } else
+            }
+
+            foreach (var kind in x.ContainsKind)
             {
-                foreach (var kind in x.ContainsKind)
+                if (FindGold(bags.FirstOrDefault(y => y.LuggageKind == kind.Key)))
                 {
-                    if(FindGold(bags.FirstOrDefault(y => y.LuggageKind == kind.Key)))
-                    {
-                        return true;
-                    }
+                    return true;
                 }
             }
+
             return false;
         }
 
