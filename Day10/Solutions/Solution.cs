@@ -74,7 +74,7 @@ namespace AOC.Template.Solutions
 
         public long SolveCombinations(long value, long index)
         {
-            return _cache.GetOrCreate<long>($"{value}_{index}", (e) =>
+            return _cache.GetOrCreate($"{value}_{index}", (e) =>
             {
                 if (index == Adapters.Count)
                 {
@@ -85,8 +85,7 @@ namespace AOC.Template.Solutions
                 var possibleChoices = Adapters.Skip((int)index).Where(x => x <= value + 3);
                 foreach (var choice in possibleChoices)
                 {
-                    index++;
-                    result += SolveCombinations(choice, index);
+                    result += SolveCombinations(choice, Adapters.IndexOf(choice)+1);
                 }
                 e.AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(1);
                 return result;
