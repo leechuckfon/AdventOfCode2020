@@ -52,24 +52,26 @@ namespace AOC.Template.Solutions
             var departTime = (long)0;
 
             var departTest = Busses.Select(x => x.DepartTime % Busses.IndexOf(x));
-            var test = Busses.Select(x =>
+
+            var chineseArithmeticSolution = Busses.Select(x =>
             {
                 var start = Busses.Except(new Bus[] { x }).Select(y => y.DepartTime).Aggregate((a, b) => a * b);
-                var a = modInverse(start % x.DepartTime, x.DepartTime);
-                var c = (x.Id == "x" ? 0 : x.DepartTime - Busses.IndexOf(x));
-                return start * a * c;
+                var invertedModulo = modInverse(start % x.DepartTime, x.DepartTime);
+                var expectedModulo = (x.Id == "x" ? 0 : x.DepartTime - Busses.IndexOf(x));
+                return start * invertedModulo * expectedModulo;
             });
 
-            departTime = test.Sum();
+            // A result, not THE result
+            departTime = chineseArithmeticSolution.Sum();
             
-            var b = Busses.Select(x => x.DepartTime).Aggregate((a,b) => a*b);
+            var commonDenominator = Busses.Select(x => x.DepartTime).Aggregate((a,b) => a*b);
             
-            while (departTime - b > 0)
+            while (departTime - commonDenominator > 0)
             {
-                departTime -= b;
+                // Keep going until you hit the lowest time
+                departTime -= commonDenominator;
             }
 
-            var trueTest = Busses.All(x => (Busses.IndexOf(x) + departTime) % x.DepartTime == 0);
             return departTime;
         }
 
@@ -80,12 +82,6 @@ namespace AOC.Template.Solutions
                 if ((a * x) % m == 1)
                     return x;
             return 1;
-        }
-
-
-        private bool CheckNext(int i, long departTime)
-        {
-            return Busses.Skip(i).All(x => (departTime+i) % x.DepartTime == 0);
         }
     }
 
