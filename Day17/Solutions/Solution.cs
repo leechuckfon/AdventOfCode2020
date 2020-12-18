@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AOC.Base.Helpers;
 
 namespace AOC.Template.Solutions
 {
@@ -11,26 +12,34 @@ namespace AOC.Template.Solutions
         Dictionary<(int, int, int,int), bool> _cubeStates2;
         protected override void DoGold()
         {
-            ParseInput();
-            for (int cycle = 0; cycle < 6; cycle++)
-            {
-                AddExtraRows2();
-                _cubeStates2 = CheckNeighbours(cycle, _cubeStates2);
-            }
 
-            Result = _cubeStates2.Select(x => x.Value).Count(x => x);
+            PerfMon.Monitor("Parse", () => ParseInput());
+            PerfMon.Monitor("Calculate", () =>
+            {
+                for (int cycle = 0; cycle < 6; cycle++)
+                {
+                    AddExtraRows2();
+                    _cubeStates2 = CheckNeighbours(cycle, _cubeStates2);
+                }
+
+                Result = _cubeStates2.Select(x => x.Value).Count(x => x);
+            });
         }
 
         protected override void DoSilver()
         {
-            ParseInput();
-            for (int cycle = 0; cycle < 6; cycle++)
+            PerfMon.Monitor("Parse", () => ParseInput());
+            
+            PerfMon.Monitor("Calculate", () =>
             {
-                AddExtraRows();
-                _cubeStates = CheckNeighbours(cycle,_cubeStates);
-            }
+                for (int cycle = 0; cycle < 6; cycle++)
+                {
+                    AddExtraRows();
+                    _cubeStates = CheckNeighbours(cycle,_cubeStates);
+                }
 
-            Result = _cubeStates.Select(x => x.Value).Count(x => x);
+                Result = _cubeStates.Select(x => x.Value).Count(x => x);
+            });
         }
         #region Silver
         private void AddExtraRows()
